@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>hello 👍</h3>
+    <input type="text" placeholder="enter something">
+
+</body>
+
+<script>
+    const ws = new WebSocket('ws://localhost:3005');
+    let typingTimeout
+    const inputField = document.querySelector("input")
+
+    inputField.addEventListener('keypress' , ()=>{
+        //console.log('you are typing')
+        clearTimeout(typingTimeout)
+        typingTimeout = setTimeout(()=>{
+            console.log("you are typing")
+            ws.send(inputField.value.toString())
+        } , 2000)
+    })
+
+    ws.addEventListener('message' , (event)=>{
+        console.log(event.data)
+    })
+</script>
+</html>
